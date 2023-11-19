@@ -1,0 +1,42 @@
+.container{
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    background-color: var(--bgSoft);
+}
+
+.title{
+    color: var(--textSoft);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+
+.menu{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.search{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #2e374a;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.input{
+    background-color: transparent;
+    border: none;
+    color: var(--text);
+    outline: none;
+}
+
+.icon{
+    display: flex;
+    gap: 20px;
+}
