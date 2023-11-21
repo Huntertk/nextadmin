@@ -3,8 +3,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 import styles from '@/app/ui/dashboard/products/products.module.css'
 import Search from '@/app/ui/dashboard/search/Search'
+import { fetchProducts } from '@/app/lib/data'
 
-const ProductsPage = () => {
+
+const ProductsPage = async ({searchParams}) => {
+
+  const q = searchParams?.q || ""
+  const page = searchParams?.page || 1
+  const {products, count} = await fetchProducts(q, page)
   return (
     <div className={styles.container}>
       <div className={styles.top}>
@@ -25,35 +31,37 @@ const ProductsPage = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
+        {products.map((product) => (
+          <tr key={product._id}>
             <td>
               <div className={styles.product}>
                 <Image 
-                src="/noproduct.jpg" 
+                src={product.img || "/noproduct.jpg"}
                 alt="image" 
                 width={40} 
                 height={40} 
                 className={styles.productImage}
                 />
-                Iphone
+                {product.title}
               </div>
             </td>
-            <td>Desc</td>
-            <td>$999</td>
-            <td>20/11/2023</td>
-            <td>72</td>
+            <td>{product.desc}</td>
+            <td>${product.price}</td>
+            <td>{product.createdAt?.toString().splice(4,16)}</td>
+            <td>{product.stock}</td>
             <td>
               <div className={styles.buttons}>
-                <Link href="/dashboard/products/test">
+                <Link href={`/dashboard/products/${product._id}`}>
                   <button className={`${styles.button} ${styles.view}`}>View</button>
                 </Link>
                   <button className={`${styles.button} ${styles.delete}`}>Delete</button>
               </div>
             </td>
           </tr>
+          ))}
         </tbody>
-      </table>
-        <Pagination />
+        </table>
+        <Pagination count={count} />
     </div>
   )
 }
