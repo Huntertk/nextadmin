@@ -9,9 +9,13 @@ const Search = ({placeholder}) => {
   const searchParams  = useSearchParams()
   const router = useRouter()
   const pathName  = usePathname()
+
+
   
   const handleChange = useDebouncedCallback( (e) => {
         const params = new URLSearchParams(searchParams)
+
+        params.set("page", 1)
         
         if(e.target.value){
           e.target.value.length > 2 && params.set("q", e.target.value)
